@@ -1,24 +1,33 @@
 # frozen_string_literal: true
+
 require_relative 'symbols'
+require_relative 'player'
+require_relative 'board'
 
 class Game # rubocop:disable Style/Documentation
-
   attr_accessor :p1, :p2, :game_over
-  
+
   include Symbols
 
   def initialize
     @p1 = Player.new
     @p2 = Player.new
     instructions
+    @board = Board.new
     @game_over = false
   end
 
   def play_game(player = @p1)
-    until game_over?
-      move_selection(player)
-      player_select(player)
+    loop do
+      @board.display_board
+      column = column_selection(player)
+      row = @board.update_board(column, player)
+      break if @board.check_vertical(row, column, player.color)
+      break if @board.check_horizontal(row, player.color) 
+
+      player = player_select(player)
     end
+    @board.display_board
   end
 
   def instructions
@@ -41,20 +50,21 @@ class Game # rubocop:disable Style/Documentation
     HEREDOC
   end
 
-
   def player_select(player)
     player == @p1 ? @p2 : @p1
   end
 
-  def move_selection(player)
+  def column_selection(player)
     puts "#{player.name} please select a column for your next move.(1-7)"
     loop do
-      move = gets.chomp
-      return move if verify_move(move)
+      column = gets.chomp.to_i - 1
+      return column if verify_move(column)
 
-      puts 'Input error! Please enter a number between 1 and 7.'
+      puts "Input error! Please enter a number between 1 and 7. Be sure it's not full"
     end
   end
+
+  def verify_move(column)
+    column.between?(0, 6) && @board.grid[0][column] == empty_space
+  end
 end
-
-
