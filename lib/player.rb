@@ -9,7 +9,7 @@ class Player # rubocop:disable Style/Documentation
   def initialize
     @name = enter_name
     if @@count == 1
-      puts "#{name} choose a color:  R for Red or Y for Yellow"
+      puts "#{name} choose a color:  'r' for Red or 'y' for Yellow"
       @color = pick_color
     else
       @color = give_color
@@ -30,7 +30,7 @@ class Player # rubocop:disable Style/Documentation
         @@color_choices.delete(color)
         return color == 'r' ? red_space : yellow_space
       end
-      puts "Input error! Please enter an 'R' or a 'Y'."
+      puts "Input error! Please enter an 'r' or a 'y'."
     end
   end
 
