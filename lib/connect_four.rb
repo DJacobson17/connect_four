@@ -22,8 +22,8 @@ class Game # rubocop:disable Style/Documentation
       @board.display_board
       column = column_selection(player)
       row = @board.update_board(column, player)
-      break if game_over?(row, column, player.color)
-      
+      break if game_over?(row, column, player)
+
       player = player_select(player)
     end
     @board.display_board
@@ -67,9 +67,14 @@ class Game # rubocop:disable Style/Documentation
     column.between?(0, 6) && @board.grid[0][column] == empty_space
   end
 
-  def game_over?(row, column, color)
-    check_vertical(row, column, color) || check_horizontal(row, column, color) || check_diagonal(color)
+  def game_over?(row, column, player)
+    if @board.check_vertical(row, column, player.color) || @board.check_horizontal(row, player.color) || @board.check_diagonal(player.color)
+      puts "Congrats #{player.name}! You are the winner!"
+      return true
+    elsif @board.check_draw
+      puts "Tie game."
+      return true
+    end 
+    false
   end
-
-
 end
