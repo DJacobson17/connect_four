@@ -11,4 +11,3 @@ module Symbols
     "\e[31m\u25cf\e[0m"
   end
 end
-

@@ -8,15 +8,15 @@ describe Game do
   it 'create new game' do
     expect(game).to be_truthy
   end
-  describe '#verify(color)' do
+  describe '#verify_color(color)' do
     it 'verify color with red' do
       color = 'r'
       # allow(game).to receive(:verify)
-      expect(game.verify(color)).to be_truthy
+      expect(game.verify_color(color)).to be_truthy
     end
     it 'verify color with yellow' do
       color = 'y'
-      expect(game.verify(color)).to be_truthy
+      expect(game.verify_color(color)).to be_truthy
     end
   end
   describe '#pick_color' do

@@ -22,9 +22,8 @@ class Game # rubocop:disable Style/Documentation
       @board.display_board
       column = column_selection(player)
       row = @board.update_board(column, player)
-      break if @board.check_vertical(row, column, player.color)
-      break if @board.check_horizontal(row, player.color) 
-
+      break if game_over?(row, column, player.color)
+      
       player = player_select(player)
     end
     @board.display_board
@@ -67,4 +66,10 @@ class Game # rubocop:disable Style/Documentation
   def verify_move(column)
     column.between?(0, 6) && @board.grid[0][column] == empty_space
   end
+
+  def game_over?(row, column, color)
+    check_vertical(row, column, color) || check_horizontal(row, column, color) || check_diagonal(color)
+  end
+
+
 end
