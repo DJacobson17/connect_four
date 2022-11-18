@@ -52,20 +52,30 @@ class Board
   end
 
   def check_left_diagonal(color)
-    @grid.each do |row|
-      return if row > 3
-
-      row.each do |column|
-        return if column > 3
-        next unless color == @grid[row][column] && color == @grid[row + 1][column + 1] && color == @grid[row + 2][column + 2] && color == @grid[row + 3][column + 3]
-
-        return true
+    0.upto(2) do |row|
+      0.upto(3) do |column|
+        if color == @grid[row][column] && color == @grid[row + 1][column + 1] && color == @grid[row + 2][column + 2] && color == @grid[row + 3][column + 3] && !@grid[row][column].nil?
+          return true
+        end
       end
     end
     false
   end
 
-
+  def check_right_diagonal(color)
+    5.downto(3) do |row|
+      0.upto(3) do |column|
+        if color == @grid[row][column] && color == @grid[row - 1][column + 1] && color == @grid[row - 2][column + 2] && color == @grid[row - 3][column + 3] && !@grid[row][column].nil?
+          return true
+        end
+      end
+    end
+    false
+  end
+  def check_draw
+    @grid.flatten.none?(empty_space)
+  end
+  
 end
 
 
